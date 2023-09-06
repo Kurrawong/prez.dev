@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=https://squidfunk.github.io/mkdocs-material/schema.json
+
+site_name: prez.dev
+dev_addr: localhost:8001
+theme:
+  name: material
+  favicon: assets/favicon.png
+  logo: assets/prez-logo.png
+  palette:
+    scheme: olis
+extra_css:
+  - stylesheets/prez.css
+markdown_extensions:
+  - admonition

@@ -1,0 +1,18 @@
+[data-md-color-scheme="olis"] {
+  --md-primary-fg-color:        #3366ff;
+  --md-primary-fg-color--light: #ECB7B7;
+  --md-primary-fg-color--dark:  #90030C;
+}
+/* #1B1B1B */
+
+
+.rtl {
+    display: inline-block;
+    -moz-transform: scale(-1, 1);
+    -webkit-transform: scale(-1, 1);
+    transform: scale(-1, 1);
+}
+
+a {
+    color: #3366ff!important;
+}
