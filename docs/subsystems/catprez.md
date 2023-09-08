@@ -89,5 +89,22 @@ You may want to categorise resources according to one or more vocabularies/contr
 
 You may also want to indicate the location of your resources using managed spatial objects in [SpacePrez](spaceprez.md).
 
+## Compared to other catalogue tools
+
+CatPrez _looks_ like common catalogue tools, such as [CKAN](https://ckan.org/) or [GeoNetwork](https://www.geonetwork-opensource.org/) but it's quite different under the hood and thus functions differently. Here are some comparison points:
+
+Aspect | CKAN | GeoNetwork | CatPrez | Notes
+--- | --- | --- | --- | ---
+**Data Model** | CKAN version of DCAT | ISO19115 or others you define | DCAT-based, extensible model | CKAN uses its own, DCAT-like, model and can be made to deliver other standard models, like ISO19115 _with a lot of effort_! Usually this involves exporting to other applications. GeoNetwork can only really deliver XML data according to ISO19115 schema or others you define in XSLT/schematron files - hard to do. CatPrez can map to any data model you wish to collect data for, with DCAT as a starting point, and can export a wide array of formats like RDF, JSON or XML. You can also pretty easily create new export formats: perhaps you need simple CSV?
+**Data Storage** | Postgres database, accessed via an object-relational mapping | XML document DB | Knowledge Graph | CatPrez' DB is more flexible than CKAN's but far more performant and maintainable than GeoNetwork's. The former needs new schema additions for new metadata, the latter needs special indexing across documents (defined schemas) to make properties available 
+**UI** | Python API with python templating | Java API & templating | Separate Python API & Vue.js UI | CatPrez uses a newer API system than CKAN and completely separates concerns. This allows UI designers to work on UI without needing to know much about the back-end API
+**Tech Stack** | Python - multiple, older, Python API tools (Pyramid, Flask), PostgresDB | Java, relational DB (Postgres, Oracle etc.) | Python (FastAPI newer API tool), RDF Knowledge Graph DB (any one of many) | CatPrez's stack is similar to CKAN's but the application code is mode modern.
+
 
 ## How does it work under the hood?
+
+CatPrez uses a [Knowlege Graph](https://en.wikipedia.org/wiki/Knowledge_graph) created with [RDF](https://en.wikipedia.org/wiki/Resource_Description_Framework) to store all of its content _and_ its configuration. This means that, while it has an expected minimum data model for catalogued items, it can grow when extended information is added with little effort.
+
+Since its configuration data is also stored in the same database, you have full control over how it delivers that data to users and can alter almost anything, just by changing data, not writing software.
+
+CatPrez data can be exported in standardised RDF form and all of it can also be queried via a [SPARQL](https://www.w3.org/TR/sparql11-query/) API. The User Interface itself uses the SPARQL API, so there are no hidden details needed for access and presentation of data. 
