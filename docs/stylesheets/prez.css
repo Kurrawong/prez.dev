@@ -16,3 +16,7 @@
 a {
     color: #3366ff!important;
 }
+
+figure {
+    border:solid 1px darkgrey;
+}
