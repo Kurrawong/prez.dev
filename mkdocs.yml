@@ -4,11 +4,19 @@ site_name: prez.dev
 dev_addr: localhost:8001
 theme:
   name: material
-  favicon: assets/favicon.png
-  logo: assets/prez-logo.png
+  favicon: /assets/favicon.ico
+  logo: /assets/prez-logo.png
   palette:
     scheme: olis
 extra_css:
   - stylesheets/prez.css
 markdown_extensions:
   - admonition
+  - md_in_html
+nav:
+  - 'index.md'
+  - 'Subsystems':
+    - 'Overview': 'subsystems/overview.md'
+    - 'CatPrez': 'subsystems/catprez.md'
+    - 'SpacePrez': 'subsystems/spaceprez.md'
+    - 'VocPrez': 'subsystems/vocprez.md'
