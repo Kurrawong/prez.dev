@@ -77,7 +77,17 @@ You can extend on this with customisable widgets, for example, for scores/metric
 ![](/assets/catprez-fair.png)
 </figure>
 
-### Profiling
+### Multiple catalogues
+
+Sometimes it's helpful to have very distinct whole catalogues. CatPrez handles this with... a catalogue of catalogues! You can have any number of distinct collections and resources can appear in one ore more of them.
+
+### Integrations
+
+CatPrez is part of the larger Prez system and shares its data storage with the other parts. This means CatPrez resources can link to vocabularies and spatial data, as well as other resources, and CatPrez can deliver all the parts seamlessly. 
+
+You may want to categorise resources according to one or more vocabularies/controlled term lists and manage those term lists in [VocPrez](vocprez.md).
+
+You may also want to indicate the location of your resources using managed spatial objects in [SpacePrez](spaceprez.md).
 
 
 ## How does it work under the hood?
