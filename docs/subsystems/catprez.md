@@ -34,7 +34,7 @@ Direct access to each object:
 ![](/assets/catprez-direct.png)  
 </figure>
 
-A specialised [OGC Rescords API](https://ogcapi.ogc.org/records/) technical interface:
+A specialised [OGC Records API](https://ogcapi.ogc.org/records/) technical interface:
 
 <figure markdown>
 ![](/assets/catprez-ogcapi.png)
