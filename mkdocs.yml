@@ -13,10 +13,16 @@ extra_css:
 markdown_extensions:
   - admonition
   - md_in_html
+  - pymdownx.snippets
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.caret
+  - pymdownx.mark
+  - pymdownx.tilde
 nav:
   - 'index.md'
-  - 'Subsystems':
-    - 'Overview': 'subsystems/overview.md'
-    - 'CatPrez': 'subsystems/catprez.md'
-    - 'SpacePrez': 'subsystems/spaceprez.md'
-    - 'VocPrez': 'subsystems/vocprez.md'
+  - 'ont.md'
+  - 'manifest.md'

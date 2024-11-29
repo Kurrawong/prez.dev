@@ -1,31 +1,32 @@
 ![](assets/prez-logo.png)
 
+This is the namespace web page for Prez.
+
 ## What is Prez?
 
-Prez is an open source web application that delivers "profiles of Knowledge Graph data".
+Prez is an open source web application API that delivers "profiles of Knowledge Graph data".
 
-Prez is used to publish:
+Prez is most commonly used to publish:
 
 * lists of managed vocabularies
-* highly configurable catalogues of digital resources
+* catalogues of semantic resources
 * spatial reference datasets
 
-While being open source, Prez is mostly maintained by [KurrawongAI](https://kurrawong.ai) who provide professional services to assist with its use.
+In addition to Prez the main API tool, there are a series of smaller tools - scripts - that can be used to prepare [Semantic Web](https://en.wikipedia.org/wiki/Semantic_web) for publication by Prez. These, and the Prez system use the Prez namespace, which is this web address:
+
+* `https://prez.dev/`
 
 ## How can I get Prez?
 
-You can run Prez yourself by understanding how it works (see below) and running all the parts.
+While being open source, Prez is mostly maintained by [KurrawongAI](https://kurrawong.ai) who provide professional services to assist with its use, see the [Prez Docs](https://docs.kurrawong.ai/prez/Overview)
 
-Or you can contact [KurrawongAI](https://kurrawong.ai) who can assist you.
+You can still run Prez, the API, and any other smaller Prez fools yourself by understanding how it works - see details via the link above.
 
-## How does Prez work?
+If ou need help, you can [contact KurrawongAI](https://kurrawong.ai/contact) who can assist you.
 
-Prez is available for use as two components:
+## Prez tools
 
-* [Prez](https://github.com/rdflib/prez/) - an API that 'slices and dices' Knowledge Graph data source according to data structure definitions
-* [Prez UI](https://github.com/RDFLib/prez-ui) - a web user interface that displays data from the Prez API
+Other than the main Prez (API) itself, the Prez tools are: 
 
-These components require a Knowledge Graph database to store the data Prez uses.
-
-Additionally, Prez relies on management of processes to load data into a Knowledge Graph database. These can be implemented in many ways, such s workflows within version control systems. 
-
+* [Prez Ontology](ont.md)
+* [Prez Manifest Model](manifest.md)
