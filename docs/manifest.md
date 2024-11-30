@@ -86,6 +86,7 @@ The `documentor.py` Python script in this documentation's repository creates a "
 
 * <https://github.com/Kurrawong/prez.dev/blob/main/manifest/documentation.py>
 
+#### Use
 ```
 usage: documentor.py [-h] [-v] [-t {markdown,asciidoc}] input
 
@@ -98,6 +99,35 @@ options:
   -t {markdown,asciidoc}, --type {markdown,asciidoc}
                         The type of markup you want to export: Markdown or ASCCIDOC
 ```
+
+#### Example
+
+Using the first example Manifest, `example01.ttl` in this too's repository and also given in the [Example](#examples) section below:
+
+```
+~$ python documentor.py example01.ttl
+```
+
+produces:
+
+```
+Resource | Role | Description
+--- | --- | ---
+Catalogue Definition, [`catalogue.ttl`](catalogue.ttl) | [Container Data](https://prez.dev/ManifestResourceRoles/ContainerData) | The definition of, and medata for, the container which here is a dcat:Catalog object
+Content, [`vocabs/*.ttl`](vocabs/*.ttl) | [Content Data](https://prez.dev/ManifestResourceRoles/ContentData) | skos:ConceptsScheme objects in RDF (Turtle) files in the vocabs/ folder
+Profile Definition, [`ogc_records_profile.ttl`](https://github.com/RDFLib/prez/blob/main/prez/reference_data/profiles/ogc_records_profile.ttl) | [Container & Content Model](https://prez.dev/ManifestResourceRoles/ContainerAndContentModel) | The default Prez profile for Records API
+Labels file, [`_background/labels.ttl`](_background/labels.ttl) | [Complete Content and Container Labels](https://prez.dev/ManifestResourceRoles/CompleteContainerAndContentLabels) | An RDF file containing all the labels for the container content
+
+```
+
+which renders as:
+
+| Resource                                                                                                                                       | Role                                                                                                              | Description                                                                          |
+|------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------|
+| Catalogue Definition, [`catalogue.ttl`](catalogue.ttl)                                                                                         | [Container Data](https://prez.dev/ManifestResourceRoles/ContainerData)                                            | The definition of, and medata for, the container which here is a dcat:Catalog object |
+| Content, [`vocabs/*.ttl`](vocabs/*.ttl)                                                                                                        | [Content Data](https://prez.dev/ManifestResourceRoles/ContentData)                                                | skos:ConceptsScheme objects in RDF (Turtle) files in the vocabs/ folder              |
+| Profile Definition, [`ogc_records_profile.ttl`](https://github.com/RDFLib/prez/blob/main/prez/reference_data/profiles/ogc_records_profile.ttl) | [Container & Content Model](https://prez.dev/ManifestResourceRoles/ContainerAndContentModel)                      | The default Prez profile for Records API                                             |
+| Labels file, [`_background/labels.ttl`](_background/labels.ttl)                                                                                | [Complete Content and Container Labels](https://prez.dev/ManifestResourceRoles/CompleteContainerAndContentLabels) | An RDF file containing all the labels for the container content                      |
 
 ### Loader
 

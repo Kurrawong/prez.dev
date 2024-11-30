@@ -2,6 +2,51 @@
 This script creates a "Prez Resources" table in either Markdown or ASCIIDOC from a Manifest file which it validates first
 
 Run this script with the -h flag for more help, i.e. ~$ python documentor.py -h
+
+Example:
+
+Input:
+
+PREFIX mrr: <https://prez.dev/ManifestResourceRoles/>
+PREFIX prezont: <https://prez.dev/>
+PREFIX prof: <http://www.w3.org/ns/dx/prof/>
+PREFIX schema: <https://schema.org/>
+
+[]
+    a prezont:Manifest ;
+    prof:hasResource
+        [
+            prof:hasArtifact "catalogue.ttl" ;
+            prof:hasRole mrr:ContainerData ;
+            schema:description "The definition of, and medata for, the container which here is a dcat:Catalog object" ;
+            schema:name "Catalogue Definition"
+        ] ,
+        [
+            prof:hasArtifact "vocabs/*.ttl" ;
+            prof:hasRole mrr:ContentData ;
+            schema:description "skos:ConceptsScheme objects in RDF (Turtle) files in the vocabs/ folder" ;
+            schema:name "Content"
+        ] ,
+        [
+            prof:hasArtifact "https://github.com/RDFLib/prez/blob/main/prez/reference_data/profiles/ogc_records_profile.ttl" ;
+            prof:hasRole mrr:ContainerAndContentModel ;
+            schema:description "The default Prez profile for Records API" ;
+            schema:name "Profile Definition"
+        ] ,
+        [
+            prof:hasArtifact "_background/labels.ttl" ;
+            prof:hasRole mrr:CompleteContainerAndContentLabels ;
+            schema:description "An RDF file containing all the labels for the container content" ;
+
+
+Output:
+
+Resource | Role | Description
+--- | --- | ---
+Catalogue Definition, [`catalogue.ttl`](catalogue.ttl) | [Container Data](https://prez.dev/ManifestResourceRoles/ContainerData) | The definition of, and medata for, the container which here is a dcat:Catalog object
+Content, [`vocabs/*.ttl`](vocabs/*.ttl) | [Content Data](https://prez.dev/ManifestResourceRoles/ContentData) | skos:ConceptsScheme objects in RDF (Turtle) files in the vocabs/ folder
+Profile Definition, [`ogc_records_profile.ttl`](https://github.com/RDFLib/prez/blob/main/prez/reference_data/profiles/ogc_records_profile.ttl) | [Container & Content Model](https://prez.dev/ManifestResourceRoles/ContainerAndContentModel) | The default Prez profile for Records API
+Labels file, [`_background/labels.ttl`](_background/labels.ttl) | [Complete Content and Container Labels](https://prez.dev/ManifestResourceRoles/CompleteContainerAndContentLabels) | An RDF file containing all the labels for the container content
 """
 
 import argparse
@@ -104,7 +149,7 @@ def cli(args=None):
     g.parse(Path(__file__).parent / "mrr.ttl")
 
     # validate it before proceeding
-    valid, validation_graph, validation_text = validate(g, shacl_graph=str(Path(__file__).parent / "manifest-validator.ttl"))
+    valid, validation_graph, validation_text = validate(g, shacl_graph=str(Path(__file__).parent / "validator.ttl"))
     if not valid:
         txt = "Your Manifest is not valid:"
         txt += "\n\n"
