@@ -37,7 +37,8 @@ PREFIX schema: <https://schema.org/>
             prof:hasArtifact "_background/labels.ttl" ;
             prof:hasRole mrr:CompleteContainerAndContentLabels ;
             schema:description "An RDF file containing all the labels for the container content" ;
-
+        ] ;
+    .
 
 Output:
 
@@ -61,6 +62,17 @@ __version__ = "1.0.0"
 
 
 def create_table(g: Graph, t="markdown") -> str:
+    # add in the Roles Vocab for role labels
+    g.parse(Path(__file__).parent / "mrr.ttl")
+
+    # validate it before proceeding
+    valid, validation_graph, validation_text = validate(g, shacl_graph=str(Path(__file__).parent / "validator.ttl"))
+    if not valid:
+        txt = "Your Manifest is not valid:"
+        txt += "\n\n"
+        txt += validation_text
+        raise ValueError(txt)
+
     if t == "asciidoc":
         header = "|===\n| Resource | Role | Description\n\n"
     else:
@@ -93,7 +105,7 @@ def create_table(g: Graph, t="markdown") -> str:
     else:
         footer = ""
 
-    return header + body + footer
+    return (header + body + footer).strip()
 
 
 def setup_cli_parser(args=None):
@@ -145,16 +157,7 @@ def cli(args=None):
     # parse the target file
     g = Graph().parse(args.input)
 
-    # add in the Roles vocab
-    g.parse(Path(__file__).parent / "mrr.ttl")
 
-    # validate it before proceeding
-    valid, validation_graph, validation_text = validate(g, shacl_graph=str(Path(__file__).parent / "validator.ttl"))
-    if not valid:
-        txt = "Your Manifest is not valid:"
-        txt += "\n\n"
-        txt += validation_text
-        raise ValueError(txt)
 
     print(create_table(g, t=args.type))
 
