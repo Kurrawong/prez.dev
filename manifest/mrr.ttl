@@ -42,6 +42,13 @@ mrr:ContentData
     skos:prefLabel "Content Data" ;
 .
 
+mrr:ContentModel
+    a skos:Concept ;
+    skos:definition "The default model for the content. Must be a set of SAHCL Shapes" ;
+    skos:inScheme cs: ;
+    skos:prefLabel "Content Model" ;
+.
+
 mrr:IncompleteContainerAndContentLabels
     a skos:Concept ;
     skos:definition "Some of the labels - possibly including names, descriptions & seeAlso links - for the Container and Content objects" ;
