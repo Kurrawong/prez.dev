@@ -14,6 +14,7 @@ kurrawong = {path = "/Users/nick/work/kurrawong/kurrawong-python", develop = tru
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.3.4"
+black = "^24.10.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
