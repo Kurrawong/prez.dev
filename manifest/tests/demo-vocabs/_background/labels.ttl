@@ -1,0 +1,169 @@
+PREFIX dcat: <http://www.w3.org/ns/dcat#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX schema: <https://schema.org/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+dcterms:hasPart
+    rdfs:label "Has Part"@en ;
+    schema:description
+        "A related resource that is included either physically or logically in the described resource."@en ,
+        "This property is intended to be used with non-literal values. This property is an inverse property of Is Part Of."@en ;
+.
+
+<http://purl.org/linked-data/registry#status>
+    rdfs:label "status"@en ;
+    schema:description "The status of this register entry"@en ;
+.
+
+rdf:type
+    rdfs:label "type" ;
+    schema:description "The subject is an instance of a class." ;
+.
+
+rdfs:label
+    rdfs:label "label" ;
+    schema:description "A human-readable name for the subject." ;
+.
+
+skos:Concept
+    rdfs:label
+        "Concept" ,
+        "Concept"@en ;
+    schema:description "An idea or notion; a unit of thought."@en ;
+.
+
+skos:ConceptScheme
+    rdfs:label "Concept Scheme"@en ;
+    schema:description "A set of concepts, optionally including statements about semantic relationships between those concepts."@en ;
+.
+
+skos:altLabel
+    rdfs:label "alternative label"@en ;
+    schema:description
+        "An alternative lexical label for a resource."@en ,
+        "The range of skos:altLabel is the class of RDF plain literals."@en ,
+        "skos:prefLabel, skos:altLabel and skos:hiddenLabel are pairwise disjoint properties."@en ;
+.
+
+skos:definition
+    rdfs:label "definition"@en ;
+    schema:description "A statement or formal explanation of the meaning of a concept."@en ;
+.
+
+skos:hasTopConcept
+    rdfs:label "has top concept"@en ;
+    schema:description "Relates, by convention, a concept scheme to a concept which is topmost in the broader/narrower concept hierarchies for that scheme, providing an entry point to these hierarchies."@en ;
+.
+
+skos:historyNote
+    rdfs:label "history note"@en ;
+    schema:description "A note about the past state/use/meaning of a concept."@en ;
+.
+
+skos:inScheme
+    rdfs:label "is in scheme"@en ;
+    schema:description "Relates a resource (for example a concept) to a concept scheme in which it is included."@en ;
+.
+
+skos:notation
+    rdfs:label "notation"@en ;
+    schema:description "A notation, also known as classification code, is a string of characters such as \"T58.5\" or \"303.4833\" used to uniquely identify a concept within the scope of a given concept scheme."@en ;
+.
+
+skos:prefLabel
+    rdfs:label "preferred label"@en ;
+    schema:description
+        "A resource has no more than one value of skos:prefLabel per language tag, and no more than one value of skos:prefLabel without language tag."@en ,
+        "The preferred lexical label for a resource, in a given language."@en ,
+        "The range of skos:prefLabel is the class of RDF plain literals."@en ,
+        """skos:prefLabel, skos:altLabel and skos:hiddenLabel are pairwise
+      disjoint properties."""@en ;
+.
+
+dcat:Catalog
+    rdfs:label
+        "فهرس قوائم البيانات"@ar ,
+        "Katalog"@cs ,
+        "Katalog"@da ,
+        "Κατάλογος"@el ,
+        "Catalog"@en ,
+        "Catálogo"@es ,
+        "Catalogue"@fr ,
+        "Catalogo"@it ,
+        "カタログ"@ja ;
+    schema:description
+        "مجموعة من توصيفات قوائم البيانات"@ar ,
+        "Řízená kolekce metadat o datových sadách a datových službách"@cs ,
+        "Řízená kolekce metadat o datových sadách a datových službách."@cs ,
+        "En samling af metadata om ressourcer (fx datasæt og datatjenester i kontekst af et datakatalog)."@da ,
+        "En udvalgt og arrangeret samling af metadata om ressourcer (fx datasæt og datatjenester i kontekst af et datakatalog). "@da ,
+        "Μια επιμελημένη συλλογή μεταδεδομένων περί συνόλων δεδομένων"@el ,
+        "Μια επιμελημένη συλλογή μεταδεδομένων περί συνόλων δεδομένων."@el ,
+        "A curated collection of metadata about resources (e.g., datasets and data services in the context of a data catalog)."@en ,
+        "Una colección curada de metadatos sobre recursos (por ejemplo, conjuntos de datos y servicios de datos en el contexto de un catálogo de datos)."@es ,
+        "Une collection élaborée de métadonnées sur les jeux de données"@fr ,
+        "Une collection élaborée de métadonnées sur les jeux de données."@fr ,
+        "Una raccolta curata di metadati sulle risorse (ad es. sui dataset e relativi servizi nel contesto di cataloghi di dati)."@it ,
+        "データ・カタログは、データセットに関するキュレートされたメタデータの集合です。"@ja ;
+.
+
+<https://kurrawong.ai>
+    rdfs:label "KurrawongAI" ;
+    schema:description """KurrawongAI is a small, Australian-based company enabling organisations to take control of their data.
+
+We use data modelling, data governance and data systems implementation expertise all based on Semantic Web and Knowledge Graph principles to ensure data is in the richest, most open and most extensible form it can be.
+
+We use knowledge graphs for data storage, as a transfer format, when serialised, and as inputs to advanced reasoning and data processing tasks, such as for Machine Learning and Artificial Intelligence applications.""" ;
+.
+
+<https://linked.data.gov.au/def/reg-statuses/experimental>
+    rdfs:label "experimental"@en ;
+    schema:description "An entry that has been accepted into the register temporarily and may be subject to change or withdrawal."@en ;
+.
+
+schema:codeRepository
+    rdfs:label "codeRepository" ;
+    schema:description "Link to the repository where the un-compiled, human readable code and related code is located (SVN, GitHub, CodePlex)." ;
+.
+
+schema:creator
+    rdfs:label "creator" ;
+    schema:description "The creator/author of this CreativeWork. This is the same as the Author property for CreativeWork." ;
+.
+
+schema:dateCreated
+    rdfs:label "dateCreated" ;
+    schema:description "The date on which the CreativeWork was created or the item was added to a DataFeed." ;
+.
+
+schema:dateModified
+    rdfs:label "dateModified" ;
+    schema:description "The date on which the CreativeWork was most recently modified or when the item's entry was modified within a DataFeed." ;
+.
+
+schema:description
+    rdfs:label "description" ;
+    schema:description "A description of the item." ;
+.
+
+schema:image
+    rdfs:label "image" ;
+    schema:description "An image of the item. This can be a [[URL]] or a fully described [[ImageObject]]." ;
+.
+
+schema:mathExpression
+    rdfs:label "mathExpression" ;
+    schema:description "A mathematical expression (e.g. 'x^2-3x=0') that may be solved for a specific variable, simplified, or transformed. This can take many formats, e.g. LaTeX, Ascii-Math, or math as you would write with a keyboard." ;
+.
+
+schema:name
+    rdfs:label "name" ;
+    schema:description "The name of the item." ;
+.
+
+schema:publisher
+    rdfs:label "publisher" ;
+    schema:description "The publisher of the creative work." ;
+.
