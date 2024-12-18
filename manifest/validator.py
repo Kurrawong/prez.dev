@@ -4,46 +4,53 @@
 
 import sys
 from pathlib import Path
-from pyshacl import validate
-from rdflib import Graph
-from rdflib.namespace import PROF, RDF, RDFS
+from typing import Union
+
 import httpx
+from kurrawong.utils import load_graph
+from pyshacl import validate as shacl_validate
+from rdflib.namespace import PROF
 
 
-def main(mainfest_file_path: Path) -> bool:
+def validate(manifest: Path) -> bool:
     ME = Path(__file__)
 
     # SHACL validation
-    manifest_graph = Graph().parse(mainfest_file_path)
-    data_graph = manifest_graph + Graph().parse(ME.parent / "mrr.ttl")
-    valid, v_graph, v_text = validate(data_graph, shacl_graph=str(ME.parent / "validator.ttl"))
+    manifest_graph = load_graph(manifest)
+    mrr_vocab_graph = load_graph(ME.parent / "mrr.ttl")
+    data_graph = manifest_graph + mrr_vocab_graph
+    shacl_graph = load_graph(ME.parent / "validator.ttl")
+    valid, v_graph, v_text = shacl_validate(data_graph, shacl_graph=shacl_graph)
 
     if not valid:
         raise ValueError(f"SHACL invalid:\n\n{v_text}")
 
     # Content link validation
     for s, o in manifest_graph.subject_objects(PROF.hasResource):
-        for o2 in manifest_graph.objects(o, PROF.hasArtifact):
-            resource_relative_path = str(o2)
-            if "http" in resource_relative_path:
-                r = httpx.get(resource_relative_path)
+        for artifact in manifest_graph.objects(o, PROF.hasArtifact):
+            artifact_str = str(artifact)
+            if "http" in artifact_str:
+                r = httpx.get(artifact_str)
                 if 200 <= r.status_code < 400:
                     pass
                 else:
-                    raise ValueError(f"Remote content link non-resolving: {resource_relative_path}")
-            elif "*" in resource_relative_path:
-                glob_parts = resource_relative_path.split("*")
-                dir = Path(mainfest_file_path.parent / Path(glob_parts[0]))
+                    raise ValueError(
+                        f"Remote content link non-resolving: {artifact_str}"
+                    )
+            elif "*" in artifact_str:
+                glob_parts = artifact_str.split("*")
+                dir = Path(manifest.parent / Path(glob_parts[0]))
                 if not Path(dir).is_dir():
-                    raise ValueError(f"The content link {resource_relative_path} is not a directory")
+                    raise ValueError(
+                        f"The content link {artifact_str} is not a directory"
+                    )
             else:
                 # It must be a local
-                RESOURCE_PATH = Path(mainfest_file_path.parent / o2)
-                if not RESOURCE_PATH.is_file():
-                    print(f"Content link {RESOURCE_PATH} is invalid - not a file")
+                if not (manifest.parent / artifact_str).is_file():
+                    print(f"Content link {manifest.parent / artifact_str} is invalid - not a file")
 
-    return True
+    return manifest_graph
 
 
 if __name__ == "__main__":
-    main(Path(sys.argv[1]).resolve())
+    validate(Path(sys.argv[1]).resolve())

@@ -1,6 +1,7 @@
 from rdflib.namespace import DefinedNamespace, Namespace
 from rdflib.term import URIRef
 
+
 class OLIS(DefinedNamespace):
 
     _NS = Namespace("https://olis.dev/")
@@ -12,4 +13,3 @@ class OLIS(DefinedNamespace):
     VirtualGraph: URIRef
 
     isAliasFor: URIRef
-

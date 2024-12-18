@@ -1,5 +1,5 @@
 PREFIX cs: <https://prez.dev/ManifestResourceRoles>
-PREFIX mrr: <https://prez.dev/ManifestResourceRoles/>
+PREFIX : <https://prez.dev/ManifestResourceRoles/>
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX schema: <https://schema.org/>
@@ -7,53 +7,53 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
 
-mrr:CompleteContainerAndContentLabels
+:CompleteCatalogueAndResourceLabels
     a skos:Concept ;
-    skos:definition "All the labels - possibly indluding names, descriptions & seeAlso links - for the Container and Content objects" ;
+    skos:definition "All the labels - possibly indluding names, descriptions & seeAlso links - for the Catalogue and Resource objects" ;
     skos:inScheme cs: ;
-    skos:prefLabel "Complete Content and Container Labels" ;
+    skos:prefLabel "Complete Catalogue and Resource Labels" ;
 .
 
-mrr:ContainerAndContentModel
+:CatalogueAndResourceModel
     a skos:Concept ;
     skos:definition "The default model for the container and the content. Must be a set of SAHCL Shapes" ;
     skos:inScheme cs: ;
-    skos:prefLabel "Container & Content Model" ;
+    skos:prefLabel "Catalogue & Resource Model" ;
 .
 
-mrr:ContainerData
+:CatalogueData
     a skos:Concept ;
     skos:definition "Data for the container, usually a Catalogue, including the identity of it and each item fo content" ;
     skos:inScheme cs: ;
-    skos:prefLabel "Container Data" ;
+    skos:prefLabel "Catalogue Data" ;
 .
 
-mrr:ContainerModel
+:CatalogueModel
     a skos:Concept ;
     skos:definition "The default model for the container. Must be a set of SAHCL Shapes" ;
     skos:inScheme cs: ;
-    skos:prefLabel "Container Model" ;
+    skos:prefLabel "Catalogue Model" ;
 .
 
-mrr:ContentData
+:ResourceData
     a skos:Concept ;
     skos:definition "Data for the content of the container" ;
     skos:inScheme cs: ;
-    skos:prefLabel "Content Data" ;
+    skos:prefLabel "Resource Data" ;
 .
 
-mrr:ContentModel
+:ResourceModel
     a skos:Concept ;
     skos:definition "The default model for the content. Must be a set of SAHCL Shapes" ;
     skos:inScheme cs: ;
-    skos:prefLabel "Content Model" ;
+    skos:prefLabel "Resource Model" ;
 .
 
-mrr:IncompleteContainerAndContentLabels
+:IncompleteCatalogueAndResourceLabels
     a skos:Concept ;
-    skos:definition "Some of the labels - possibly including names, descriptions & seeAlso links - for the Container and Content objects" ;
+    skos:definition "Some of the labels - possibly including names, descriptions & seeAlso links - for the Catalogue and Resource objects" ;
     skos:inScheme cs: ;
-    skos:prefLabel "Incomplete Content and Container Labels" ;
+    skos:prefLabel "Incomplete Catalogue and Resource Labels" ;
 .
 
 <https://kurrawong.ai>
@@ -62,26 +62,26 @@ mrr:IncompleteContainerAndContentLabels
     schema:url "https://kurrawong.ai"^^xsd:anyURI ;
 .
 
-mrr:1.0.0
+:1.0.0
     rdfs:label "1.0.0" ;
 .
 
 cs:
     a skos:ConceptScheme ;
-    owl:versionIRI mrr:1.0.0 ;
+    owl:versionIRI :1.0.0 ;
     owl:versionInfo "1.0.0: First public version" ;
     skos:definition "This vocabulary is a test vocabulary showing the use of images within Concept definitions"@en ;
     skos:hasTopConcept
-        mrr:completeContainerAndContentLabels ,
-        mrr:containerAndContentModel ,
-        mrr:containerData ,
-        mrr:containerModel ,
-        mrr:contentData ,
-        mrr:incompleteContainerAndContentLabels ;
+        :CompleteCatalogueAndResourceLabels ,
+        :CatalogueAndResourceModel ,
+        :CatalogueData ,
+        :CatalogueModel ,
+        :ResourceData ,
+        :IncompleteCatalogueAndResourceLabels ;
     skos:historyNote "Create in 2024 for Prez data loading" ;
     skos:prefLabel "Manifest Resource Roles Vocabulary" ;
     schema:creator <https://kurrawong.ai> ;
     schema:dateCreated "2024-11-29"^^xsd:date ;
-    schema:dateModified "2024-11-29"^^xsd:date ;
+    schema:dateModified "2024-12-17"^^xsd:date ;
     schema:publisher <https://kurrawong.ai> ;
 .
