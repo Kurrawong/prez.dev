@@ -8,12 +8,12 @@ Example:
 Input:
 
 PREFIX mrr: <https://prez.dev/ManifestResourceRoles/>
-PREFIX prezont: <https://prez.dev/>
+PREFIX prez: <https://prez.dev/>
 PREFIX prof: <http://www.w3.org/ns/dx/prof/>
 PREFIX schema: <https://schema.org/>
 
 []
-    a prezont:Manifest ;
+    a prez:Manifest ;
     prof:hasResource
         [
             prof:hasArtifact "catalogue.ttl" ;
@@ -51,10 +51,11 @@ Labels file, [`_background/labels.ttl`](_background/labels.ttl) | [Complete Cont
 """
 
 import argparse
-from pyshacl import validate
-from urllib.parse import ParseResult, urlparse
-from pathlib import Path
 import sys
+from pathlib import Path
+from urllib.parse import ParseResult, urlparse
+
+from pyshacl import validate
 from rdflib import Graph
 from rdflib import PROF, SDO, SKOS
 
@@ -66,7 +67,9 @@ def create_table(g: Graph, t="markdown") -> str:
     g.parse(Path(__file__).parent / "mrr.ttl")
 
     # validate it before proceeding
-    valid, validation_graph, validation_text = validate(g, shacl_graph=str(Path(__file__).parent / "validator.ttl"))
+    valid, validation_graph, validation_text = validate(
+        g, shacl_graph=str(Path(__file__).parent / "validator.ttl")
+    )
     if not valid:
         txt = "Your Manifest is not valid:"
         txt += "\n\n"
@@ -156,8 +159,6 @@ def cli(args=None):
 
     # parse the target file
     g = Graph().parse(args.input)
-
-
 
     print(create_table(g, t=args.type))
 
