@@ -1,76 +1,150 @@
 """
 This script creates an n-quads files containing the following by parsing a Prez Manifest:
 
- 1. A Named Graph for each content item using the item's IRI as the graph IRI
- 2. A Named Graph for the container either using the container's IRI as the graph IRI if given, or by making one up if a Blank Node
- 3. All the triples in resources with roles mrr:completeContainerAndContentLabels & mrr:incompleteContainerAndContentLabels within a Named Graph with IRI <https://background>
- 4. An Olis Virtual Graph, <https://olis.dev/VirtualGraph> object which is as an alias for all the Named Graphs from 1., 2. & 3.
- 5. Entries in the System Graph - Named Graph with IRI <https://olis.dev/SystemGraph> - for each Real and the Virtual Graph
+ 1. A Named Graph for each resource using the item's IRI as the graph IRI
+ 2. A Named Graph for the catalogue, either using the catalogue's IRI as the graph IRI + "-catalogue" if given, or by making one up - a Blank Node
+ 3. All the triples in resources with roles mrr:CompleteCatalogueAndResourceLabels & mrr:IncompleteCatalogueAndResourceLabels within a Named Graph with IRI <https://background>
+ 4. An Olis Virtual Graph, <https://olis.dev/VirtualGraph> object using the catalogue IRI, if give, which is as an alias for all the Named Graphs from 1., 2. & 3.
+ 5. Multiple entries in the System Graph - Named Graph with IRI <https://olis.dev/SystemGraph> - for each Named and the Virtual Graph from 1., 2. & 3.
 
-Run this script with the -h flag for more help, i.e. ~$ python documentor.py -h
+Optionally this scrit can upload the n-quads file to a SPARQL endpoint.
 
-
-
-
-
-docker run --rm --env=ADMIN_PASSWORD=admin --volume=/Users/nick/work/kurrawong/prez.dev/manifest/fuseki/configuration:/fuseki-base/configuration --volume=/Users/nick/work/kurrawong/prez.dev/manifest/fuseki/databases:/fuseki-base/databases -p 3030:3030 --name manifest-loader
-secoresearch/fuseki:5.1.0
+Run this script with the -h flag for more help, i.e. ~$ python loader.py -h
 """
-import argparse
-import httpx
-from urllib.parse import ParseResult, urlparse
-from pathlib import Path
-import sys
-from rdflib import Graph, Namespace
-from rdflib import PROF, RDF, SDO, SKOS
-from kurrawong.fuseki import upload_file
 
-MRR = Namespace("https://prez.dev/ManifestResourceRoles/")
+import argparse
+import sys
+from pathlib import Path
+from typing import Optional
+
+import httpx
+from rdflib import DCAT, DCTERMS, PROF, RDF, SDO, SKOS
+from rdflib import Graph, URIRef, Dataset
+
+from ns_mrr import MRR
+from ns_olis import OLIS
+from validator import validate
+from kurrawong.format import make_quads
+from kurrawong.utils import load_graph
 
 __version__ = "1.0.0"
 
 
-def load(sparql_endpoint: str, manifest_file: Path):
-    g = Graph().parse(manifest_file)
+def export_quads(
+    g: Graph, dataset_iri: URIRef, destination_path: Optional[Path] = None
+):
+    d = make_quads(g, dataset_iri)
+    d.bind("reg", "http://purl.org/linked-data/registry#")
+    d.bind("olis", OLIS)
 
-    with httpx.Client() as client:
-        # ContentData
-        p = None
+    if destination_path is not None:
+        if destination_path.is_file():
+            d2 = Dataset()
+            d2.parse(destination_path)
+            d3 = d + d2
+            d3.serialize(format="trig", destination=destination_path)
+        else:
+            d.serialize(format="trig", destination=destination_path)
+    else:
+        print(d.serialize(format="trig"))
+
+
+def load(
+    manifest: Path,
+    sparql_endpoint: str = None,
+    export_quads_file: Path = None,
+):
+    """Loads a catalogue of data from a manifest file, whose content are valid according to the Prez Manifest Model
+    (https://kurrawong.github.io/prez.dev/manifest/) either into a specified quads file in the Trig format, or into a
+    given SPARQL Endpoint."""
+
+    if sparql_endpoint is not None and export_quads_file is not None:
+        raise ValueError("You may only specify either a sparql_endpoint or a export_quads_file, not both")
+    elif sparql_endpoint is None and export_quads_file is None:
+        raise ValueError("You must specify either a sparql_endpoint or a export_quads_file, not neither")
+
+    # load and validate manifest
+    g = validate(manifest)
+
+    MANIFEST_ROOT_DIR = manifest.parent
+
+    vg = Graph()
+    vg_iri = None
+
+    with (httpx.Client() as http_client):
         for s, o in g.subject_objects(PROF.hasResource):
-            for o2 in g.objects(o, PROF.hasRole):
-                if o2 == MRR.ContentData:
-                    for o3 in g.objects(o, PROF.hasArtifact):
-                        if not len(str(o3).split("*")) > 1:
-                            p = manifest_file.parent / Path(str(o3))
+            for role in g.objects(o, PROF.hasRole):
+                # The catalogue - must be processed first
+                if role == MRR.CatalogueData:
+                    for artifact in g.objects(o, PROF.hasArtifact):
+                        # load the Catalogue, determine the Virtual Graph & Catalogue IRIs
+                        # and fail if we can't see a Catalogue object
+                        c = load_graph(MANIFEST_ROOT_DIR / str(artifact))
+                        vg_iri = c.value(predicate=RDF.type, object=DCAT.Catalog)
+                        if vg_iri is None:
+                            raise ValueError(
+                                f"ERROR: Could not create a Virtual Graph as no Catalog found in the Catalogue data"
+                            )
+                        catalogue_iri = URIRef(str(vg_iri) + "-catalogue")
 
-                            data = Graph().parse(p)
-                            for ng in data.subjects(RDF.type, SKOS.ConceptScheme):
-                                ng = str(ng)
+                        # add to the System Graph
+                        vg.add((vg_iri, RDF.type, OLIS.VirtualGraph))
+                        vg.add((vg_iri, OLIS.isAliasFor, catalogue_iri))
+                        vg_name = c.value(
+                            subject=vg_iri,
+                            predicate=SDO.name | DCTERMS.title | SKOS.prefLabel,
+                        ) or str(vg_iri)
+                        vg.add((vg_iri, SDO.name, vg_name))
 
-                            if ng is not None:
-                                upload_file(sparql_endpoint, p, client, ng)
+                        # export the Catalogue data
+                        if export_quads_file is not None:
+                            export_quads(c, catalogue_iri, export_quads_file)
                         else:
-                            glob_parts = str(o3).split("*")
-                            p = manifest_file.parent / Path(glob_parts[0])
-                            p = p.glob("*." + glob_parts[1])
+                            pass
 
-        print(p)
-        # upload_file()
+        # non-catalogue resources
+        for s, o in g.subject_objects(PROF.hasResource):
+            for role in g.objects(o, PROF.hasRole):
+                # The data files & background - must be processed after Catalogue
+                if role in [
+                    MRR.CompleteCatalogueAndResourceLabels,
+                    MRR.IncompleteCatalogueAndResourceLabels,
+                    MRR.ResourceData,
+                    ]:
+
+                    for artifact in g.objects(o, PROF.hasArtifact):
+                        if not len(str(artifact).split("*")) > 1:
+                            files = [manifest.parent / Path(str(artifact))]
+                        else:
+                            glob_parts = str(artifact).split("*")
+                            files = Path(
+                                manifest.parent / Path(glob_parts[0])
+                            ).glob("*" + glob_parts[1])
+
+                        for f in files:
+                            fg = Graph().parse(f)
+                            if role == MRR.ResourceData:
+                                resource_iri = fg.value(
+                                    predicate=RDF.type, object=SKOS.ConceptScheme
+                                )
+
+                            if role in [MRR.CompleteCatalogueAndResourceLabels,
+                                          MRR.IncompleteCatalogueAndResourceLabels]:
+                                resource_iri = URIRef("http://background")
+
+                            vg.add((vg_iri, OLIS.isAliasFor, resource_iri))
+                            export_quads(fg, resource_iri, export_quads_file)
+
+        # export the System Graph
+        if export_quads_file is not None:
+            export_quads(vg, OLIS.SystemGraph, export_quads_file)
+        else:
+            pass
+
     return True
 
+
 def setup_cli_parser(args=None):
-    def url_file_or_folder(input: str) -> ParseResult | Path:
-        parsed = urlparse(input)
-        if all([parsed.scheme, parsed.netloc]):
-            return parsed
-        path = Path(input)
-        if path.is_file():
-            return path
-        if path.is_dir():
-            return path
-        raise argparse.ArgumentTypeError(
-            f"{input} is not a valid input. Must be a file, folder or sparql endpoint"
-        )
 
     parser = argparse.ArgumentParser()
 
@@ -104,15 +178,16 @@ def cli(args=None):
 
     args = setup_cli_parser(args)
 
-
-
     #
     #   Do stuff here
     #
 
 
 if __name__ == "__main__":
-    load(Path("/Users/nick/work/kurrawong/demo-vocabs/manifest.ttl"))
+    manifest = Path(__file__).parent / "tests" / "demo-vocabs" / "manifest.ttl"
+    results_file = Path(__file__).parent / "results.trig"
+    print()
+    print(load(manifest, export_quads_file=results_file, sparql_endpoint="x"))
     exit()
     retval = cli(sys.argv[1:])
     if retval is not None:

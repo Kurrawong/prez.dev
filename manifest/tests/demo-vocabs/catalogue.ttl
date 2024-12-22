@@ -14,7 +14,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
         catns:language-test ;
     schema:codeRepository "https://github.com/kurrawong/demo-vocabs" ;
     schema:creator <https://kurrawong.ai> ;
-    schema:dateCreated "2024-11-17"^^xsd:gYear ;
+    schema:dateCreated "2023"^^xsd:gYear ;
     schema:dateModified "2024-10-16"^^xsd:date ;
     schema:description "A testing catalogue for the Prez Manifest Loader tool" ;
     schema:name "Demo Vocabularies" ;
