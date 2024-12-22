@@ -4,7 +4,6 @@
 
 import sys
 from pathlib import Path
-from typing import Union
 
 import httpx
 from kurrawong.utils import load_graph

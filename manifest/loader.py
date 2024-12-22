@@ -21,10 +21,10 @@ import httpx
 from rdflib import DCAT, DCTERMS, PROF, RDF, SDO, SKOS
 from rdflib import Graph, URIRef, Dataset
 
-from ns_mrr import MRR
-from ns_olis import OLIS
-from validator import validate
-from kurrawong.format import make_quads
+from manifest.ns_mrr import MRR
+from manifest.ns_olis import OLIS
+from manifest.validator import validate
+from kurrawong.format import make_dataset
 from kurrawong.utils import load_graph
 
 __version__ = "1.0.0"
@@ -33,7 +33,7 @@ __version__ = "1.0.0"
 def export_quads(
     g: Graph, dataset_iri: URIRef, destination_path: Optional[Path] = None
 ):
-    d = make_quads(g, dataset_iri)
+    d = make_dataset(g, dataset_iri)
     d.bind("reg", "http://purl.org/linked-data/registry#")
     d.bind("olis", OLIS)
 
