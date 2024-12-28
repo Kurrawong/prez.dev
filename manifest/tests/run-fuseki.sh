@@ -1,1 +1,0 @@
-docker run --rm --env=ADMIN_PASSWORD=admin --volume=fuseki/configuration:/fuseki-base/configuration --volume=fuseki/databases:/fuseki-base/databases -p 3030:3030 --name mani secoresearch/fuseki:5.1.0
