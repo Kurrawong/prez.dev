@@ -9,14 +9,14 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
 :CompleteCatalogueAndResourceLabels
     a skos:Concept ;
-    skos:definition "All the labels - possibly indluding names, descriptions & seeAlso links - for the Catalogue and Resource objects" ;
+    skos:definition "All the labels - possibly including names, descriptions & seeAlso links - for the Catalogue and Resource objects" ;
     skos:inScheme cs: ;
     skos:prefLabel "Complete Catalogue and Resource Labels" ;
 .
 
 :CatalogueAndResourceModel
     a skos:Concept ;
-    skos:definition "The default model for the container and the content. Must be a set of SAHCL Shapes" ;
+    skos:definition "The default model for the container and the content. Must be a set of SHACL Shapes" ;
     skos:inScheme cs: ;
     skos:prefLabel "Catalogue & Resource Model" ;
 .
@@ -30,7 +30,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
 :CatalogueModel
     a skos:Concept ;
-    skos:definition "The default model for the container. Must be a set of SAHCL Shapes" ;
+    skos:definition "The default model for the container. Must be a set of SHACL Shapes" ;
     skos:inScheme cs: ;
     skos:prefLabel "Catalogue Model" ;
 .
@@ -44,7 +44,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
 :ResourceModel
     a skos:Concept ;
-    skos:definition "The default model for the content. Must be a set of SAHCL Shapes" ;
+    skos:definition "The default model for the content. Must be a set of SHACL Shapes" ;
     skos:inScheme cs: ;
     skos:prefLabel "Resource Model" ;
 .

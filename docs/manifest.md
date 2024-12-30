@@ -42,15 +42,15 @@ The IRI of this vocabulary is:
 
 Human-readable form:
 
-| Concept IRI                               | Label                                   | Definition                                                                                                          | Parent                         |
-|-------------------------------------------|-----------------------------------------|---------------------------------------------------------------------------------------------------------------------|--------------------------------|
-| `mrr:ContainerData`                       | Container Data                          | Data for the container, usually a Catalogue, including the identity of it and each item fo content                  | -                              |
-| `mrr:ContentData`                         | Content Data                            | Data for the content of the container                                                                               | -                              |
-| `mrr:ContainerAndContentModel`            | Container & Content Model               | The default model for the container and the content. Must be a set of SAHCL Shapes                                  | -                              |
-| `mrr:ContainerModel`                      | Container Model                         | The default model for the container. Must be a set of SAHCL Shapes                                                  | `mrr:containerAndContentModel` |
-| `mrr:ContentModel`                        | Content Model                           | The default model for the content. Must be a set of SAHCL Shapes                                                    | `mrr:containerAndContentModel` |
-| `mrr:CompleteContainerAndContentLabels`   | Complete Content and Container Labels   | All the labels - possibly indluding names, descriptions & seeAlso links - for the Container and Content objects     | -                              |
-| `mrr:IncompleteContainerAndContentLabels` | Incomplete Content and Container Labels | Some of the labels - possibly indluding names, descriptions & seeAlso links - for the Container and Content objects | -                              |
+| Concept IRI                                | Label                                  | Definition                                                                                                           | Parent                          |
+|--------------------------------------------|----------------------------------------|----------------------------------------------------------------------------------------------------------------------|---------------------------------|
+| `mrr:CatalogueData`                        | Catalogue Data                         | Data for the catalogue, usually a Catalogue, including the identity of it and each item fo resource                  | -                               |
+| `mrr:ResourceData`                         | Resource Data                          | Data for the resource of the catalogue                                                                               | -                               |
+| `mrr:CatalogueAndResourceModel`            | Catalogue & Resource Model             | The default model for the catalogue and the resource. Must be a set of SHACL Shapes                                  | -                               |
+| `mrr:CatalogueModel`                       | Catalogue Model                        | The default model for the catalogue. Must be a set of SHACL Shapes                                                   | `mrr:CatalogueAndResourceModel` |
+| `mrr:ResourceModel`                        | Resource Model                         | The default model for the resource. Must be a set of SHACL Shapes                                                    | `mrr:CatalogueAndResourceModel` |
+| `mrr:CompleteCatalogueAndResourceLabels`   | Complete Resource & Catalogue Labels   | All the labels - possibly including names, descriptions & seeAlso links - for the Catalogue and Resource objects     | -                               |
+| `mrr:IncompleteCatalogueAndResourceLabels` | Incomplete Resource & Catalogue Labels | Some of the labels - possibly including names, descriptions & seeAlso links - for the Catalogue and Resource objects | -                               |
 
 Machine-readable form:
 
@@ -87,6 +87,6 @@ The `prez-manifest` Python package, available at https://github.com/Kurrawong/pr
 
 * `create_table`: creates an ASCIIDOC or Markdown table of Manifest content from a Manifest file
 * `validate`: validates that a Manifest file conforms to the specification and that all linked-to assets are available
-* `load`: loads a Manifest file, and all the content it specifies, into either an n-quads file or a Fuseki database
+* `load`: loads a Manifest file, and all the resources it specifies, into either an n-quads file or a Fuseki database
 
 See the package's repository for details. 
