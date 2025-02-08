@@ -97,14 +97,8 @@ val:ShapeP04
     sh:maxCount 1 ;
     sh:message "ShapeP04: If you supply a schema:description for a prez:Manifest's Resource Descriptors, it must be either a plain string or a langString literal" ;
     sh:or (
-
-        [
-            sh:datatype xsd:string ;
-        ]
-
-        [
-            sh:datatype rdf:langString ;
-        ]
+        [ sh:datatype xsd:string ]
+        [ sh:datatype rdf:langString ]
     ) ;
     sh:path schema:description ;
 .
@@ -114,14 +108,8 @@ val:ShapeP05
     sh:maxCount 1 ;
     sh:message "ShapeP05: If you supply a schema:name for a prez:Manifest's Resource Descriptors, it must be either a plain string or a langString literal" ;
     sh:or (
-
-        [
-            sh:datatype xsd:string ;
-        ]
-
-        [
-            sh:datatype rdf:langString ;
-        ]
+        [ sh:datatype xsd:string ]
+        [ sh:datatype rdf:langString ]
     ) ;
     sh:path schema:name ;
 .
