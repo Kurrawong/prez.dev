@@ -37,10 +37,25 @@ graph LR
 5. Each Resource Descriptor MAY have a `schema:name` and/or a `schema:description` predicate indicating literal resources naming and describing it.
 
 6. A Resource, or an Artifact, MAY indicate that it (if an Artifact) or the Artifacts within it (if a Resource) conform to any number of defined Standards or Profiles of Standards, using the predicate `dcterms:conformsTo`.
+    * Validators can be indicated either by using "well known" validator IRIs or by directly indicating the validator RDF file
+          * current "well known" are listed below and can be indicated using an IRI like this:
+              * `dcterms:conformsTo <WELL-KNONW-VALIDATOR-IRI> ;`
+          * other validators, such as `my-local-validator.ttl` or `http://online-validator.com/val.ttl` should be indicated using a literal, like this: 
+              * `dcterms:conformsTo "path/from/manifest/root/to/my-local-validator.ttl" ;`
+
+#### Known Validators
+
+The following validators can be referred to by IRI, as described above:
+
+| *Validator*           | *IRI*                                              | *Scope*                                             |
+|-----------------------|----------------------------------------------------|-----------------------------------------------------|
+| GeoSPARQL             | `<http://www.opengis.net/def/geosparql/validator>` | Spatial Objects                                     |
+| IDN Catalogue Profile | `<https://data.idnau.org/pid/cp/validator>`        | Catalogued resources containing Indigenous metadata |
+| VocPub                | `<https://w3id.org/profile/vocpub>`                | Vocabularies                                        |
 
 ### Validation
 
-The [SHACL](https://www.w3.org/TR/shacl/) validator below can be used to test the validity of a manifest.
+Prez Manifests themselves can be validated using a [SHACL](https://www.w3.org/TR/shacl/) validation tool, using this validator file below:
 
 ```
 --8<-- "docs/assets/validator.ttl"
@@ -155,6 +170,25 @@ A single Resource in a Manifest claiming conformance to the [VocPub Profile of S
         prof:hasRole mrr:ResourceData ;
         # ...
         dcterms:conformsTo <https://w3id.org/profile/vocpub> ;
+    ] ,
+```
+
+### conformance claim - supplied validator
+
+To indicate a validator stored in a local file, `my-local-validator.ttl`:
+
+```
+    [
+        prof:hasArtifact
+            [
+                schema:contentLocation "vocabs/image-test.ttl" ;
+                schema:mainEntity <https://example.com/demo-vocabs/image-test> ;
+            ] ,
+            "vocabs/language-test.ttl" ;
+            "vocabs/other-vocab.ttl" ;
+        prof:hasRole mrr:ResourceData ;
+        # ...
+        dcterms:conformsTo "path/to/my-local-validator.ttl" ;
     ] ,
 ```
 
