@@ -19,9 +19,13 @@ graph LR
   Resource --1:0-1--> name;
   Resource --1:0-1--> decription;
   Resource --1:0-N--> conformsTo;
+  Resource --1:0-1--> additionalType;
+  artifact --1:0-1--> sync;
   artifact --1:0-1--> mainEntity;
   artifact --1:0-1--> contentLocation;
   artifact --1:0-N--> conformsTo;
+  artifact --1:0-1--> additionalType;
+  artifact --1:0-1--> sync;
 ```
 
 ### Rules
@@ -43,6 +47,8 @@ graph LR
           * other validators, such as `my-local-validator.ttl` or `http://online-validator.com/val.ttl` should be indicated using a literal, like this: 
               * `dcterms:conformsTo "path/from/manifest/root/to/my-local-validator.ttl" ;`
 
+7. A Resource, or an Artifact, MAY indicate that it (if an Artifact) or the Artifacts within it (if a Resource) is of a specific class, using the predicate `schema:additionalType`.
+
 #### Known Validators
 
 The following validators can be referred to by IRI, as described above:
@@ -52,6 +58,77 @@ The following validators can be referred to by IRI, as described above:
 | GeoSPARQL             | `<http://www.opengis.net/def/geosparql/validator>` | Spatial Objects                                     |
 | IDN Catalogue Profile | `<https://data.idnau.org/pid/cp/validator>`        | Catalogued resources containing Indigenous metadata |
 | VocPub                | `<https://w3id.org/profile/vocpub>`                | Vocabularies                                        |
+
+#### Known Classes
+
+Some classes of resource are commonly catalogued and, when they are, their class does not need to be indicated within a Manifest. These classes are:
+
+* `dcat:Resource`
+* `dcat:Dataset`
+* `dcat:Catalog`
+* `owl:Ontology`
+* `schema:CreativeWork`
+* `schema:Dataset`
+* `schema:DataCatalog`
+* `skos:ConceptScheme`
+
+If an Artifact, or all the Artifacts within a Resource, are not one of these types, then they can be indicated as being so by use of `schema:additionalType` like this:
+
+```turtle
+[]
+    a prez:Manifest ;
+    prof:hasResource
+        # ...
+        [
+            prof:hasArtifact "resources/*.ttl" ;
+            prof:hasRole mrr:ResourceData ;
+            schema:additionalType <{A-CLASS-IRI}> ;
+        ] ,
+        # ...
+.
+```
+
+This will allow the Manifest to communicate the class of the object software should be looking for within the resource.
+
+#### Main Entity
+
+If, for some reason, a resource is neither of one of the Known Classes nore it its class able to be indicated with `schema:additionalType`, the specific IRI of the resource can be indicated using `schema:mainEntity`. This may be needed in situations where an RDF file containing a resource also contains multiple other instance of the same class.
+
+```turtle
+[]
+    a prez:Manifest ;
+    prof:hasResource
+        # ...
+        [
+            prof:hasArtifact "resources/file1.ttl" ;
+            prof:hasRole mrr:ResourceData ;
+            schema:mainEntity <{RESOURCE-IRI}> ;
+        ] ,
+        # ...
+.
+```
+
+#### Indicating no action
+
+If a Manifest wishes to list a resource but indicate it not for automatic handling by manifest tooling - perhaps it's too large to synchronise with an RDF DB - then the predicate `prez:sync` with the value `false` should be set.
+
+Here is an example of a Manifest indicating 4 spatial datasets, one of which is too large to sync:
+
+```turtle
+[]
+    a prez:Manifest ;
+    prof:hasResource
+        [
+            prof:hasArtifact "resources/*.ttl" ;  # datset1.ttl, dataset2.ttl & dataset3.ttl
+            prof:hasRole mrr:ResourceData ;
+        ] ,
+        [
+            prof:hasArtifact "resources/large/dataset4.ttl" ;
+            prof:hasRole mrr:ResourceData ;
+            prez:sync false ;
+        ] ;
+.        
+```
 
 ### Validation
 
@@ -191,6 +268,10 @@ To indicate a validator stored in a local file, `my-local-validator.ttl`:
         dcterms:conformsTo "path/to/my-local-validator.ttl" ;
     ] ,
 ```
+
+### additionalType
+
+Where a 
 
 ## Tools
 
