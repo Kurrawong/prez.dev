@@ -11,32 +11,43 @@ This page defines the Prez Manifest specification and links to relevant tools.
 
 ## Model
 
+### Overview
+
 ``` mermaid
 graph LR
-  Manifest --1:1-N--> Resource;
-  Resource --1:1--> artifact;
-  Resource --1:1--> role;
-  Resource --1:0-1--> name;
-  Resource --1:0-1--> decription;
-  Resource --1:0-N--> conformsTo;
-  Resource --1:0-1--> additionalType;
-  artifact --1:0-1--> sync;
-  artifact --1:0-1--> mainEntity;
-  artifact --1:0-1--> contentLocation;
+  style Manifest fill:#FF90BB,stroke:#666,stroke-width:2px
+  Manifest --1:1-N--> ResourceDescriptor;
+  style ResourceDescriptor fill:#FFC1DA,stroke:#666,stroke-width:2px
+  style artifact fill:#F8F8E1,stroke:#666,stroke-width:2px 
+  ResourceDescriptor --1:1-N--> artifact;
+  ResourceDescriptor --1:1--> hasRole;
+  ResourceDescriptor --1:0-N--> conformsTo;
+  ResourceDescriptor --1:0-1--> additionalType;
+  ResourceDescriptor --1:0-1--> sync;
+  style artifact fill:#F8F8E1,stroke:#666,stroke-width:2px  
   artifact --1:0-N--> conformsTo;
   artifact --1:0-1--> additionalType;
   artifact --1:0-1--> sync;
+  artifact --1:0-1--> mainEntity;
+  artifact --1:0-1--> contentLocation;
+  style artifact fill:#F8F8E1,stroke:#666,stroke-width:2px  
+  artifact --1:0-1--> dateModified;
+  artifact --1:0-1--> versionIRI;
+  artifact --1:0-1--> version;
 ```
 
-### Rules
+_See [Annex A: Diagram Breakdown](#annex-a-diagram-breakdown) below for a part-by-part explanation of this diagram._
+
+## Rules
 
 1. An instance of the Manifest class, `prez:Manifest`, MUST have 1 or more Resource Descriptors, `prof:ResourceDescriptor` instances, indicated by the `prof:hasResource` predicate. The Manifest instance can be identified by an IRI or a Blank Node.
 
 2. Each Resource Descriptor MUST have at least one `prof:hasArtifact` predicate indicating either an RDF literal resource (a string) containing the location of the artifact or a Blank Node containing the location of the artifacts indicated by the `schema:contentLocation` predicate and the main artifact IRI within that content location indicated by `schema:mainEntity`.
+    * See the [Main Entity](#main-entity) details below
 
 3. Where content location is indicated, it MUST be a file path or path pattern relative to the manifest or a URL.
 
-4. Each Resource Descriptor MUST also have exactly one `prof:hasRole` predicate indicating a Concept from the _Manifest Resource Roles Vocabulary_.
+4. Each Resource Descriptor MUST also have exactly one `prof:hasRole` predicate indicating a Concept from the [Manifest Resource Roles Vocabulary](mrr.md).
 
 5. Each Resource Descriptor MAY have a `schema:name` and/or a `schema:description` predicate indicating literal resources naming and describing it.
 
@@ -46,8 +57,14 @@ graph LR
               * `dcterms:conformsTo <WELL-KNONW-VALIDATOR-IRI> ;`
           * other validators, such as `my-local-validator.ttl` or `http://online-validator.com/val.ttl` should be indicated using a literal, like this: 
               * `dcterms:conformsTo "path/from/manifest/root/to/my-local-validator.ttl" ;`
+    * See the [Known Validators](#known-validators) list below
 
-7. A Resource, or an Artifact, MAY indicate that it (if an Artifact) or the Artifacts within it (if a Resource) is of a specific class, using the predicate `schema:additionalType`.
+7. A Resource, or an Artifact, MAY indicate that it (if an Artifact) or the Artifacts within it (if a Resource) is of a specific class, using the predicate `schema:additionalType`
+    * See the [Known Classes](#known-classes) list below
+8. A Resource, or an Artifact, MAY indicate that it should not be ignored by synchronisation tooling by setting a predicate `prez:sync` to `false`
+    * See the [Indicating no action](#indicating-no-action) section below
+9. An Artifact may have "versioning information" about it indicated by use of a number of known versioning predicates
+    * see the [Artifact Versioning](#artifact-versioning) section below
 
 #### Known Validators
 
@@ -130,49 +147,25 @@ Here is an example of a Manifest indicating 4 spatial datasets, one of which is 
 .        
 ```
 
-### Validation
+### Artifact versioning
 
-Prez Manifests themselves can be validated using a [SHACL](https://www.w3.org/TR/shacl/) validation tool, using this validator file below:
+An Artifact's version may be indicated by use of any or all of the following predicates:
 
-```
---8<-- "docs/assets/validator.ttl"
-```
+* `owl:versionIRI`
+* `schema:version` or `owl:versionInfo`
+* `schema:dateModified` or `dcterms:modified`
 
-!!! note
+If this is done, then tools, such as _prezmanifest_ that load and sync Manifest-described data, can obtain versioning information from a Manifest file, rather than by inspecting Artifacts' contents.
 
-    The `prezmanifest` tool, described [below](#prezmanifest) has a simple validate function that tests a manifest with this validator and also checks that all the artifacts indicated in resources actually exist.
+## Validation
 
-<a id="roles-vocabulary"></a>
+The validator - a file containing rules - for Manifests is given in [Annex B: Manifest Validator](#annex-b-manifest-validator) below.
 
-## Manifest Resource Roles Vocabulary
+A manifest and all its content can also be validated using the _prezmanifest_ tool's _validate_ function which both validates a Manifest file using the validator below and also any content for which a _conformance claim_ is given.
 
-This roles vocabulary contains the allowed Roles that a Resource can play with respect to a Manifest.
+See the [Tools](#tools) section below for info on the _prezmanifest_ tool.
 
-The IRI of this vocabulary is:
-
-* `https://prez.dev/ManifestResourceRoles`
-    * the vocab namespace is `https://prez.dev/ManifestResourceRoles/`
-    * recommended namespace prefix is `mrr`
-
-Human-readable form:
-
-| Concept IRI                                | Label                                  | Definition                                                                                                           | Parent                          |
-|--------------------------------------------|----------------------------------------|----------------------------------------------------------------------------------------------------------------------|---------------------------------|
-| `mrr:CatalogueData`                        | Catalogue Data                         | Data for the catalogue, usually a Catalogue, including the identity of it and each item fo resource                  | -                               |
-| `mrr:ResourceData`                         | Resource Data                          | Data for the resource of the catalogue                                                                               | -                               |
-| `mrr:CatalogueAndResourceModel`            | Catalogue & Resource Model             | The default model for the catalogue and the resource. Must be a set of SHACL Shapes                                  | -                               |
-| `mrr:CatalogueModel`                       | Catalogue Model                        | The default model for the catalogue. Must be a set of SHACL Shapes                                                   | `mrr:CatalogueAndResourceModel` |
-| `mrr:ResourceModel`                        | Resource Model                         | The default model for the resource. Must be a set of SHACL Shapes                                                    | `mrr:CatalogueAndResourceModel` |
-| `mrr:CompleteCatalogueAndResourceLabels`   | Complete Resource & Catalogue Labels   | All the labels - possibly including names, descriptions & seeAlso links - for the Catalogue and Resource objects     | -                               |
-| `mrr:IncompleteCatalogueAndResourceLabels` | Incomplete Resource & Catalogue Labels | Some of the labels - possibly including names, descriptions & seeAlso links - for the Catalogue and Resource objects | -                               |
-
-Machine-readable form:
-
-```
---8<-- "docs/assets/mrr.ttl"
-```
-
-The IRI for automatic retrieval of this vocabulary file is: <https://prez.dev/ManifestResourceRoles>.
+Additionally, any stand-alon SHACL validator can also be used to validate a Manifest. Again, see the tools section below.
 
 ## Examples
 
@@ -275,18 +268,115 @@ Where a
 
 ## Tools
 
-### prezmanifest
+### prezmanifest - [GitHub](https://github.com/Kurrawong/prez-manifest), [PyPI](https://pypi.org/project/prezmanifest/)
 
-The `prezmanifest` command line tool and Python package, available at https://github.com/Kurrawong/prez-manifest and on [PyPI](https://pypi.org/project/prezmanifest/), provides a number of functions to work with Prez Manifests. The functions provided are:
+The _prezmanifest_ command line tool and Python package, available on [GitHub](https://github.com/Kurrawong/prez-manifest) and on [PyPI](https://pypi.org/project/prezmanifest/), provides a number of functions to work with Prez Manifests. The functions provided are:
 
-* **validate**
-    * performs SHACL validation on the Manifest, followed by existence checking for each resource - are they reachable by this script on the file system or over the Internet? Will also check any [Conformance Claims](#conformance-claims)given in the Manifest)
-* **label**
-    * lists all the IRIs for elements with a Manifest's Resources that don't have labels. Given a source of additional labels, such as the [KurrawongAI Semantic Background](#kurrawongai-semantic-background), it can try to extract any missing labels and insert them into a Manifest as an additional labelling resource
-* **document**
-    * **table**: can create a Markdown or ASCCIIDOC table of Resources from a Prez Manifest file for use in README files in repositories
-    * **catalogue**: add the IRIs of resources within a Manifest's 'Resource Data' object to a catalogue RDF file
-* **load**
-    *  extract all the content of all Resources listed in a Prez Manifest and load it into either a single RDF multi-graph ('quads') file or into an RDF DB instance by using the Graph Store Protocol
+* **validate** - validate a Manifest file and contents
+* **label** - check Manifest contents for unlabelled elements
+* **document** - create certain forms of documentation
+* **load** - load a Manifest's content into a file or DB
+* **sync** - synchronise a Manifest's contents with a DB
 
 See the package's repository for installation and use details. 
+
+### SHACL validation
+
+The preferred way to perform validation of a Prez Manifest file is to use the _prezmanifest_ tool's _validate_ function, as listed above. Hoever, you can also perform validation of a manifest - the manifest file only, not the content it refers to, using any one of a number of [SHACL](https://www.w3.org/TR/shacl/) validators. 
+
+See these notes for a listing of general-purpose SHACL validation tools:
+
+* [ABIS standard's notes on SHACL tooling & validation](https://linked.data.gov.au/def/abis#_performing_validation)
+
+## Annex A: Diagram Breakdown
+
+### `Manifest` & `ResourceDescriptor`
+
+``` mermaid
+graph LR
+  style Manifest fill:#FF90BB,stroke:#666,stroke-width:2px
+  Manifest --1:1-N--> ResourceDescriptor;
+  style ResourceDescriptor fill:#FFC1DA,stroke:#666,stroke-width:2px
+  style artifact fill:#F8F8E1,stroke:#666,stroke-width:2px 
+  ResourceDescriptor --1:1-N--> artifact;
+  subgraph main
+  ResourceDescriptor --1:1--> hasRole;
+  ResourceDescriptor --1:0-N--> conformsTo;
+  ResourceDescriptor --1:0-1--> additionalType;
+  ResourceDescriptor --1:0-1--> sync;
+  end
+```
+
+A `Manifest` must indicate _at least one_ `ResourceDescriptor`.
+
+`ResourceDescriptor` instances MUST have the predicates of:
+
+* `hasRole` - exactly 1
+* `hasArtifact`- at least 1
+
+`ResourceDescriptor` instances MAY have the predicates of:
+
+* `conformsTo` - at most 1
+* `additionalType` - at most 1
+* `sync` - at most 1. If present, value must be `false`, e.g. `true` is default
+
+### `Artifact` - description
+
+``` mermaid
+graph LR
+  style artifact fill:#F8F8E1,stroke:#666,stroke-width:2px  
+```
+
+``` mermaid
+graph LR
+  style artifact fill:#F8F8E1,stroke:#666,stroke-width:2px  
+  subgraph main
+  artifact --1:0-N--> conformsTo;
+  artifact --1:0-1--> additionalType;
+  artifact --1:0-1--> sync;
+  end
+  subgraph artifact-only
+  artifact --1:0-1--> mainEntity;
+  artifact --1:0-1--> contentLocation;
+  end
+```
+
+The value for the `hasArtifact` predicate can be either:
+
+* a literal, with no further predicates of its own
+* a node (likely a Blank Node) 
+
+If a node, it MUST have:
+
+* `contentLocation` - exactly 1
+* `mainEntity` - exactly 1
+
+If a node, it MAY have:
+
+* `conformsTo` - at most 1
+* `additionalType` - at most 1
+* `sync` - at most 1. If present, value must be `false`, e.g. `true` is default
+
+### `Artifact` - versioning
+
+If a node, an `Artifact` MAY have:
+
+* `dateModified` - at most 1
+* `versionIRI` - at most 1
+* `version` - at most 1
+
+``` mermaid
+graph LR
+  style artifact fill:#F8F8E1,stroke:#666,stroke-width:2px  
+  subgraph versioning
+  artifact --1:0-1--> dateModified;
+  artifact --1:0-1--> versionIRI;
+  artifact --1:0-1--> version;
+  end
+```
+
+## Annex B: Manifest Validator
+
+```
+--8<-- "docs/assets/validator.ttl"
+```
