@@ -1,7 +1,5 @@
 ![](assets/prez-logo.png)
 
-This is the namespace web page for Prez.
-
 ## What is Prez?
 
 Prez is an open source web application API that delivers "profiles of Knowledge Graph data".
@@ -16,13 +14,35 @@ In addition to Prez the main API tool, there are a series of smaller tools - scr
 
 * `https://prez.dev/`
 
+## Show me
+
+Here are some live instances of Prez online:
+
+<a href="https://test.icsm.information.qld.gov.au/">
+![ICSM Prez instance](assets/icsm.png){width=45%, align=left}
+</a>
+
+<a href="https://demo.dev.kurrawong.ai/catalogs">
+![KurrawongAI's demo instance](assets/demo.png){width=45%}
+</a>
+
+<p>&nbsp;</p>
+
+<a href="https://vocabularies.sarig.sa.gov.au/vocab">
+![GSSA instance](assets/sarig.png){width=45%, align=left}
+</a>
+
+<a href="hhttps://portal.bdr.gov.au/catalogues">
+![BDR instance](assets/bdr.png){width=45%}
+</a>
+
 ## How can I get Prez?
 
-While being open source, Prez is mostly maintained by [KurrawongAI](https://kurrawong.ai) who provide professional services to assist with its use, see the [Prez Docs](https://docs.kurrawong.ai/prez/Overview)
+While being open source, Prez is mostly maintained by [KurrawongAI](https://kurrawong.ai) who provide professional services to assist with its use, see the [Prez Docs](https://docs.kurrawong.ai/prez/)
 
 You can still run Prez, the API, and any other smaller Prez fools yourself by understanding how it works - see details via the link above.
 
-If ou need help, you can [contact KurrawongAI](https://kurrawong.ai/contact) who can assist you.
+If you need help, you can [contact KurrawongAI](https://kurrawong.ai/contact) who can assist you.
 
 ## Prez tools
 

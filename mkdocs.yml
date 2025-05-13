@@ -11,6 +11,7 @@ theme:
 extra_css:
   - stylesheets/prez.css
 markdown_extensions:
+  - attr_list
   - admonition
   - md_in_html
   - pymdownx.snippets
