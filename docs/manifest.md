@@ -74,7 +74,7 @@ The following validators can be referred to by IRI, as described above:
 |-----------------------|----------------------------------------------------|-----------------------------------------------------|
 | GeoSPARQL             | `<http://www.opengis.net/def/geosparql/validator>` | Spatial Objects                                     |
 | IDN Catalogue Profile | `<https://data.idnau.org/pid/cp/validator>`        | Catalogued resources containing Indigenous metadata |
-| VocPub                | `<https://w3id.org/profile/vocpub>`                | Vocabularies                                        |
+| VocPub                | `<https://linked.data.gov.au/def/vocpub>`                | Vocabularies                                        |
 
 #### Known Classes
 
@@ -213,20 +213,20 @@ A snippet of a Manifest - just one value for `hasResource` - showing use of `mai
 
 ### conformance claim - single
 
-A single artifact claiming conformance to the [VocPub Profile of SKOS](https://w3id.org/profile/vocpub).
+A single artifact claiming conformance to the [VocPub Profile of SKOS](https://linked.data.gov.au/def/vocpub).
 
 ```
     prof:hasArtifact
         [
             schema:contentLocation "vocabs/image-test.ttl" ;
             schema:mainEntity <https://example.com/demo-vocabs/image-test> ;
-            dcterms:conformsTo <https://w3id.org/profile/vocpub> ;
+            dcterms:conformsTo <https://linked.data.gov.au/def/vocpub> ;
         ] ,
 ```
 
 ### conformance claim - all
 
-A single Resource in a Manifest claiming conformance to the [VocPub Profile of SKOS](https://w3id.org/profile/vocpub) for all artifacts (there are 3 given).
+A single Resource in a Manifest claiming conformance to the [VocPub Profile of SKOS](https://linked.data.gov.au/def/vocpub) for all artifacts (there are 3 given).
 
 ```
     [
@@ -239,7 +239,7 @@ A single Resource in a Manifest claiming conformance to the [VocPub Profile of S
             "vocabs/other-vocab.ttl" ;
         prof:hasRole mrr:ResourceData ;
         # ...
-        dcterms:conformsTo <https://w3id.org/profile/vocpub> ;
+        dcterms:conformsTo <https://linked.data.gov.au/def/vocpub> ;
     ] ,
 ```
 
