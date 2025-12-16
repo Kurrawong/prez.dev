@@ -1,0 +1,20 @@
+a:not(header a):not(footer a):not(.btn) {
+    color: var(--color-foreground) !important;
+    text-decoration: none;
+}
+
+a:not(header a):not(footer a):not(.btn):hover {
+    text-decoration: none !important;
+}
+
+main a:not(.btn):not(h2 a):not(h3 a):not(h4 a) {
+    color: var(--color-link) !important;
+}
+
+main a:not(.btn):not(h2 a):not(h3 a):not(h4 a):hover {
+    text-decoration: underline !important;
+}
+
+/*main a:not(.btn):not(h2 a):hover {*/
+/*    text-decoration: underline;*/
+/*}*/

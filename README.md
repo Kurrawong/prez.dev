@@ -1,17 +1,23 @@
-# prez.dev 
+# Prez Docs
+Available at [dev.prez.dev](https://dev.prez.dev)
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+## Development
+Install
 
-## Commands
+```bash
+pnpm install
+```
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
+After install, run:
 
-## Project layout
+```bash
+pnpm approve-builds
+```
 
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+and select better-sqlite
+
+Run
+
+```bash
+pnpm dev
+```
