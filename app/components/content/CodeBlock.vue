@@ -16,7 +16,8 @@ function copyToClipboard() {
 </script>
 
 <template>
-    <pre :lang="props.lang" :class="cn('group relative !m-0', props.class)">
-<slot /><Button variant="ghost" size="icon" class="z-10 absolute hidden group-hover:flex top-2 right-2" title="Copy to clipboard" @click="copyToClipboard"><Copy class="size-4" /></Button>
-</pre>
+    <pre :lang="props.lang" :class="cn('group relative !m-0 whitespace-pre-wrap', props.class)">
+		<slot />
+	    <Button variant="ghost" size="icon" class="z-10 absolute hidden group-hover:flex top-2 right-2" title="Copy to clipboard" @click="copyToClipboard"><Copy class="size-4" /></Button>
+	</pre>
 </template>

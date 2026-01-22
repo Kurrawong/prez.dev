@@ -10,10 +10,10 @@ const props = defineProps<{
 </script>
 
 <template>
-    <div :class="cn('flex flex-col text-sm gap-2 toc-content', props.class)">
+    <div :class="cn('flex flex-col text-sm gap-2 toc-content overflow-y-auto', props.class)">
         <template v-for="link in props.links">
             <NuxtLink :to="`#${link.id}`" class="font-normal no-underline">{{ link.text }}</NuxtLink>
-            <TOCContent v-if="link.children" :links="link.children" class="ml-4" />
+            <TOCContent v-if="link.children" :links="link.children" class="ml-4 border-l pl-2 shrink-0 overflow-y-[unset]" />
         </template>
     </div>
 </template>

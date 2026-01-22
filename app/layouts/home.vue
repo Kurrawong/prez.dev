@@ -36,7 +36,7 @@ const { data: navigation } = await useAsyncData("home-navigation", () => {
 				                    </NuxtLink>
 			                    </Button>
 			                    <Button variant="outline" as-child>
-				                    <a href="https://demo.dev.kurrawong.ai" target="_blank">
+				                    <a href="https://demo.prez.dev" target="_blank">
 					                    See the demo
 					                    <ExternalLink />
 				                    </a>

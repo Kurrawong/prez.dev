@@ -23,12 +23,12 @@ const props = withDefaults(defineProps<{
 	</ClientOnly>
 	<div v-else class="flex flex-col border rounded-md my-6">
 		<div v-if="props.filename" class="p-2">{{props.filename}}</div>
-		<pre :class="cn('!my-0', props.class)"><slot /></pre>
+		<pre :class="cn('!my-0 whitespace-pre-wrap', props.class)"><slot /></pre>
 	</div>
 </template>
 
 <style>
 pre code .line {
-	display: block;
+	//display: block;
 }
 </style>

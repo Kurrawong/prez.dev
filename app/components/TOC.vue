@@ -26,7 +26,7 @@ router.beforeEach((from, to) => {
                 <TableOfContents class="size-4" />
             </Button>
         </SheetTrigger>
-        <SheetContent side="right" class="p-2 m-4 rounded-md h-[calc(100dvh-75px)]] top-[75px]" hideClose>
+        <SheetContent side="right" class="p-2 m-4 rounded-md h-[calc(100dvh-75px)]] top-[75px] w-[255px]" hideClose>
             <SheetHeader class="flex flex-row justify-between items-center p-0">
                 <SheetClose as-child>
                     <Button variant="ghost" size="icon">
@@ -40,7 +40,7 @@ router.beforeEach((from, to) => {
         </SheetContent>
     </Sheet>
     <!-- desktop nav -->
-    <div :class="cn('border-l overflow-y-auto p-3 hidden lg:flex lg:flex-col lg:w-[255px] min-h-full', props.class)">
+    <div :class="cn('lg:border-l p-3 hidden lg:flex lg:flex-col lg:w-[255px] lg:sticky lg:top-0 lg:self-start lg:max-h-dvh', props.class)">
         <span class="mb-4">Page Contents</span>
         <TOCContent :links="props.links" />
     </div>

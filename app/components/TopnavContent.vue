@@ -35,7 +35,7 @@ function isActive(link: { path: string; title: string; }): boolean {
             {{ link.title }}
         </NuxtLink>
 	    <Button variant="ghost" class="border" as-child>
-		    <a target="_blank" href="https://demo.dev.kurrawong.ai">Demo <ExternalLink class="size-4" /></a>
+		    <a target="_blank" href="https://demo.prez.dev">Demo <ExternalLink class="size-4" /></a>
 	    </Button>
     </nav>
 </template>
