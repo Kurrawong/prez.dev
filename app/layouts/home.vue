@@ -17,7 +17,7 @@ const { data: navigation } = await useAsyncData("home-navigation", () => {
 </script>
 
 <template>
-    <div class="grow max-w-[1400px] mx-auto w-full">
+    <div class="grow container mx-auto w-full">
         <main>
             <div v-if="route.path === '/'" class="w-full min-h-[400px] flex items-center justify-center dark:bg-gradient-to-b dark:from-0% dark:from-tertiary/50 dark:to-60% dark:to-background p-6">
                 <div class="grid grid-cols-1 md:grid-cols-[1fr_3fr] gap-4">

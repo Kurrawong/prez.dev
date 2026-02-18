@@ -40,7 +40,7 @@ router.beforeEach((from, to) => {
         </SheetContent>
     </Sheet>
     <!-- desktop nav -->
-    <div :class="cn('lg:border-l p-3 hidden lg:flex lg:flex-col lg:w-[255px] lg:sticky lg:top-0 lg:self-start lg:max-h-dvh', props.class)">
+    <div :class="cn('lg:border-l p-3 hidden lg:flex lg:flex-col lg:w-[240px] lg:sticky lg:top-0 lg:self-start lg:max-h-dvh', props.class)">
         <span class="mb-4">Page Contents</span>
         <TOCContent :links="props.links" />
     </div>

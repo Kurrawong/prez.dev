@@ -13,7 +13,7 @@ export const COLLECTION_INFO: Record<keyof PageCollections, {
     prezui: {
         title: "Prez UI",
         repo: "https://github.com/RDFLib/prez-ui",
-        version: "4.2.0",
+        version: "4.3.0",
         icons: {
             "/prezui": Home,
             "/prezui/theming": Palette,
@@ -27,7 +27,7 @@ export const COLLECTION_INFO: Record<keyof PageCollections, {
     prez: {
         title: "Prez API",
         repo: "https://github.com/RDFLib/prez",
-        version: "4.23.2",
+        version: "4.23.6",
         icons: {
             "/prez": Home,
             "/prez/development": Code,
@@ -39,7 +39,7 @@ export const COLLECTION_INFO: Record<keyof PageCollections, {
     prezmanifest: {
         title: "Prez Manifest",
         repo: "https://github.com/Kurrawong/prezmanifest",
-        version: "1.0.14",
+        version: "1.2.1",
         icons: {
             "/prezmanifest": Home,
             "/prezmanifest/development": Code,

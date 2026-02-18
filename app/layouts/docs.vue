@@ -40,7 +40,7 @@ function formatDate(date: string): string {
 </script>
 
 <template>
-	<div class="grow max-w-[1400px] mx-auto w-full flex flex-row h-full relative">
+	<div class="grow container mx-auto w-full flex flex-row h-full relative">
 		<Sidebar :collection="props.collection" v-model="sidebarOpen" />
 		<div class="grid grid-cols-[1fr_max-content] grid-rows-[min-content_1fr] lg:grid-rows-1 grow p-3 gap-3 relative h-full" style="align-items: start">
 			<main class="row-start-2 lg:row-start-1 w-full">

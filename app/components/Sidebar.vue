@@ -51,7 +51,7 @@ router.beforeEach((from, to) => {
         </SheetContent>
     </Sheet>
     <!-- desktop nav -->
-    <div :class="cn('border-r p-2 hidden md:flex md:flex-col md:w-[240px] md:sticky md:top-0 md:self-start md:max-h-dvh', props.class)">
+    <div :class="cn('border-r p-2 hidden md:flex md:flex-col md:w-[260px] md:sticky md:top-0 md:self-start md:max-h-dvh', props.class)">
 	    <div class="flex flex-row justify-between items-center gap-2">
 		    <NuxtLink :to="`/${props.collection}`" class="flex flex-row items-center gap-1">
 			    <img src="/img/prez-logo.png" alt="Prez logo" class="w-6">
