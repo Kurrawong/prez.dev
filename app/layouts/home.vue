@@ -27,7 +27,7 @@ const { data: navigation } = await useAsyncData("home-navigation", () => {
 	                <Card class="min-h-48 bg-background/50 backdrop-blur-md">
 	                    <CardContent class="flex flex-col justify-between h-full items-start">
 		                    <h1 class="text-3xl">Presenting Linked Data</h1>
-		                    <p class="text-muted-foreground">A highly customisable suite of tools...</p>
+		                    <p class="text-muted-foreground">A highly customisable stack of tools for organising, accessing and presenting Linked Data</p>
 		                    <div class="flex flex-row justify-between w-full">
 			                    <Button as-child>
 				                    <NuxtLink to="/quickstart">

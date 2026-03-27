@@ -11,7 +11,7 @@ export const COLLECTION_INFO: Record<keyof PageCollections, {
         title: "Home",
     },
     prezui: {
-        title: "Prez UI",
+        title: "PrezUI",
         repo: "https://github.com/RDFLib/prez-ui",
         version: "4.3.0",
         icons: {
@@ -24,26 +24,26 @@ export const COLLECTION_INFO: Record<keyof PageCollections, {
             "/prezui/quickstart": Play,
         }
     },
-    prez: {
-        title: "Prez API",
+    prezapi: {
+        title: "PrezAPI",
         repo: "https://github.com/RDFLib/prez",
         version: "4.23.6",
         icons: {
-            "/prez": Home,
-            "/prez/development": Code,
-            "/prez/deployment": Rocket,
-            "/prez/configuration": Wrench,
-            "/prez/quickstart": Play,
+            "/prezapi": Home,
+            "/prezapi/development": Code,
+            "/prezapi/deployment": Rocket,
+            "/prezapi/configuration": Wrench,
+            "/prezapi/quickstart": Play,
         }
     },
-    prezmanifest: {
-        title: "Prez Manifest",
-        repo: "https://github.com/Kurrawong/prezmanifest",
+    kgmanifest: {
+        title: "KG Manifest",
+        repo: "https://github.com/Kurrawong/kgmanifest",
         version: "1.2.1",
         icons: {
-            "/prezmanifest": Home,
-            "/prezmanifest/development": Code,
-            "/prezmanifest/quickstart": Play,
+            "/kgmanifest": Home,
+            "/kgmanifest/development": Code,
+            "/kgmanifest/quickstart": Play,
         }
     },
 };

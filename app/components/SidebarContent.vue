@@ -43,7 +43,7 @@ const { data } = await useAsyncData(`${props.collection}-navigation`, () => {
 		        <NuxtLink :key="item.path" :to="item.path" activeClass="active" class="">
 			        <component v-if="COLLECTION_INFO[props.collection].icons?.[item.path]" :is="COLLECTION_INFO[props.collection].icons[item.path]" />
 			        <File v-else />
-			        <span>{{ item.title }}</span>
+			        <span class="line-clamp-1">{{ item.title }}</span>
 			        <div class="flex flex-row gap-1 items-center ml-auto">
 				        <Badge v-for="tag in item.tags">{{ tag }}</Badge>
 			        </div>

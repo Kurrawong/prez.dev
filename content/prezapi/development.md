@@ -640,7 +640,7 @@ An abstraction over data providers is provided with "Repositories". Three types 
 
 ## High Level Sequence `/object` endpoint
 
-### Prez UI or similar human-actionable client
+### PrezUI or similar human-actionable client
 
 Prez provides a `/object` endpoint as an endpoint that supplies any information known about a given URI. If an annotated
 mediatype is requested, prez will additionally provide all system links for endpoints which can render the object. The

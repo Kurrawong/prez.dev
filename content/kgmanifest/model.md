@@ -1,11 +1,11 @@
 ---
-title: Prez Manifest Model
+title: KG Manifest Model
 description:
 ---
 
-A Prez Manifest is an RDF file that describes and links to a set of resources that can be loaded into an RDF database for Prez to provide access to.
+A KG Manifest is an RDF file that describes and links to a set of resources that can be loaded into an RDF database for Prez to provide access to.
 
-This page defines the Prez Manifest specification and links to relevant tools.
+This page defines the KG Manifest specification and links to relevant tools.
 
 1. [The model](#model)
 2. [Manifest Resource Roles Vocabulary](#roles-vocabulary)
@@ -158,15 +158,15 @@ An Artifact's version may be indicated by use of any or all of the following pre
 * `schema:version` or `owl:versionInfo`
 * `schema:dateModified` or `dcterms:modified`
 
-If this is done, then tools, such as _prezmanifest_ that load and sync Manifest-described data, can obtain versioning information from a Manifest file, rather than by inspecting Artifacts' contents.
+If this is done, then tools, such as _kgmanifest_ that load and sync Manifest-described data, can obtain versioning information from a Manifest file, rather than by inspecting Artifacts' contents.
 
 ## Validation
 
 The validator - a file containing rules - for Manifests is given in [Annex B: Manifest Validator](#annex-b-manifest-validator) below.
 
-A manifest and all its content can also be validated using the _prezmanifest_ tool's _validate_ function which both validates a Manifest file using the validator below and also any content for which a _conformance claim_ is given.
+A manifest and all its content can also be validated using the _kgmanifest_ tool's _validate_ function which both validates a Manifest file using the validator below and also any content for which a _conformance claim_ is given.
 
-See the [Tools](#tools) section below for info on the _prezmanifest_ tool.
+See the [Tools](#tools) section below for info on the _kgmanifest_ tool.
 
 Additionally, any stand-alon SHACL validator can also be used to validate a Manifest. Again, see the tools section below.
 
@@ -271,9 +271,9 @@ Where a
 
 ## Tools
 
-### prezmanifest - [GitHub](https://github.com/Kurrawong/prez-manifest), [PyPI](https://pypi.org/project/prezmanifest/)
+### kgmanifest - [GitHub](https://github.com/Kurrawong/kg-manifest), [PyPI](https://pypi.org/project/kgmanifest/)
 
-The _prezmanifest_ command line tool and Python package, available on [GitHub](https://github.com/Kurrawong/prez-manifest) and on [PyPI](https://pypi.org/project/prezmanifest/), provides a number of functions to work with Prez Manifests. The functions provided are:
+The _kgmanifest_ command line tool and Python package, available on [GitHub](https://github.com/Kurrawong/prez-manifest) and on [PyPI](https://pypi.org/project/kgmanifest/), provides a number of functions to work with KG Manifests. The functions provided are:
 
 * **validate** - validate a Manifest file and contents
 * **label** - check Manifest contents for unlabelled elements
@@ -285,7 +285,7 @@ See the package's repository for installation and use details.
 
 ### SHACL validation
 
-The preferred way to perform validation of a Prez Manifest file is to use the _prezmanifest_ tool's _validate_ function, as listed above. Hoever, you can also perform validation of a manifest - the manifest file only, not the content it refers to, using any one of a number of [SHACL](https://www.w3.org/TR/shacl/) validators.
+The preferred way to perform validation of a KG Manifest file is to use the _kgmanifest_ tool's _validate_ function, as listed above. Hoever, you can also perform validation of a manifest - the manifest file only, not the content it refers to, using any one of a number of [SHACL](https://www.w3.org/TR/shacl/) validators.
 
 See these notes for a listing of general-purpose SHACL validation tools:
 

@@ -1,5 +1,5 @@
 # Prez Docs
-Available at [dev.prez.dev](https://dev.prez.dev)
+Available at [prez.dev](https://prez.dev)
 
 ## Development
 Install
