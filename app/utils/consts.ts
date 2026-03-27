@@ -24,7 +24,7 @@ export const COLLECTION_INFO: Record<keyof PageCollections, {
             "/prezui/quickstart": Play,
         }
     },
-    prez: {
+    prezapi: {
         title: "PrezAPI",
         repo: "https://github.com/RDFLib/prez",
         version: "4.23.6",
@@ -36,7 +36,7 @@ export const COLLECTION_INFO: Record<keyof PageCollections, {
             "/prezapi/quickstart": Play,
         }
     },
-    prezmanifest: {
+    kgmanifest: {
         title: "KG Manifest",
         repo: "https://github.com/Kurrawong/kgmanifest",
         version: "1.2.1",

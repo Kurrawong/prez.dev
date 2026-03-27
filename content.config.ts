@@ -21,12 +21,12 @@ export default defineContentConfig({
             source: "prezui/**/*.md",
             schema,
         }),
-        prez: defineCollection({
+        prezapi: defineCollection({
             type: "page",
             source: "prezapi/**/*.md",
             schema,
         }),
-        prezmanifest: defineCollection({
+        kgmanifest: defineCollection({
             type: "page",
             source: "kgmanifest/**/*.md",
             schema,

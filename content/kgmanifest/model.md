@@ -1,11 +1,11 @@
 ---
-title: Prez Manifest Model
+title: KG Manifest Model
 description:
 ---
 
-A Prez Manifest is an RDF file that describes and links to a set of resources that can be loaded into an RDF database for Prez to provide access to.
+A KG Manifest is an RDF file that describes and links to a set of resources that can be loaded into an RDF database for Prez to provide access to.
 
-This page defines the Prez Manifest specification and links to relevant tools.
+This page defines the KG Manifest specification and links to relevant tools.
 
 1. [The model](#model)
 2. [Manifest Resource Roles Vocabulary](#roles-vocabulary)
@@ -273,7 +273,7 @@ Where a
 
 ### kgmanifest - [GitHub](https://github.com/Kurrawong/kg-manifest), [PyPI](https://pypi.org/project/kgmanifest/)
 
-The _kgmanifest_ command line tool and Python package, available on [GitHub](https://github.com/Kurrawong/prez-manifest) and on [PyPI](https://pypi.org/project/kgmanifest/), provides a number of functions to work with Prez Manifests. The functions provided are:
+The _kgmanifest_ command line tool and Python package, available on [GitHub](https://github.com/Kurrawong/prez-manifest) and on [PyPI](https://pypi.org/project/kgmanifest/), provides a number of functions to work with KG Manifests. The functions provided are:
 
 * **validate** - validate a Manifest file and contents
 * **label** - check Manifest contents for unlabelled elements
@@ -285,7 +285,7 @@ See the package's repository for installation and use details.
 
 ### SHACL validation
 
-The preferred way to perform validation of a Prez Manifest file is to use the _kgmanifest_ tool's _validate_ function, as listed above. Hoever, you can also perform validation of a manifest - the manifest file only, not the content it refers to, using any one of a number of [SHACL](https://www.w3.org/TR/shacl/) validators.
+The preferred way to perform validation of a KG Manifest file is to use the _kgmanifest_ tool's _validate_ function, as listed above. Hoever, you can also perform validation of a manifest - the manifest file only, not the content it refers to, using any one of a number of [SHACL](https://www.w3.org/TR/shacl/) validators.
 
 See these notes for a listing of general-purpose SHACL validation tools:
 
