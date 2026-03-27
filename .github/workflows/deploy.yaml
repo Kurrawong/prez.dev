@@ -3,7 +3,7 @@ name: Deploy to Azure Static Web Apps
 on:
   push:
     branches:
-      - jamie/prez-docs
+      - main
   workflow_dispatch:
 
 jobs:
