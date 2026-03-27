@@ -1,3 +1,3 @@
 <template>
-    <NuxtLayout name="docs" collection="prez" />
+    <NuxtLayout name="docs" collection="prezapi" />
 </template>
