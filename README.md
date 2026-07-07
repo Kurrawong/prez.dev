@@ -1,22 +1,19 @@
 # Prez Docs
-Available at [prez.dev](https://prez.dev)
+
+An in-progress plan of the documentation of Prez (mostly for v5).
+
+Available at https://dev.prez.dev
 
 ## Development
-Install
+Currently uses a Nuxt layer template of Nuxt Content & Shadcn-vue - https://shadcn-docs-nuxt.vercel.app
+
+To install:
 
 ```bash
 pnpm install
 ```
 
-After install, run:
-
-```bash
-pnpm approve-builds
-```
-
-and select better-sqlite
-
-Run
+To run the dev server:
 
 ```bash
 pnpm dev

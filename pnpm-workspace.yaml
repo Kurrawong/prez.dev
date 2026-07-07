@@ -1,7 +1,6 @@
-ignoredBuiltDependencies:
-  - '@parcel/watcher'
-  - esbuild
-  - vue-demi
-
-onlyBuiltDependencies:
-  - better-sqlite3
+allowBuilds:
+  better-sqlite3: true
+  '@parcel/watcher': false
+  esbuild: false
+  sharp: true
+  vue-demi: false

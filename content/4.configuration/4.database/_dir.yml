@@ -1,0 +1,3 @@
+title: Database Configuration
+icon: lucide:database
+navigation.redirect: /configuration/database/fuseki
